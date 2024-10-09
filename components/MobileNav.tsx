@@ -15,13 +15,14 @@ import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import Footer from "./Footer"
-
+import PlaidLink from "./PlaidLink"
 
 const MobileNav = ({ user }: MobileNavProps) => {
   const pathname = usePathname();
 
   return (
-    <section className="w-fulll max-w-[264px]">
+    <section className="w-full max-w-[264px]">
+      <PlaidLink user={user} variant="primary"/>
       <Sheet>
         <SheetTrigger>
           <Image
@@ -29,7 +30,7 @@ const MobileNav = ({ user }: MobileNavProps) => {
             width={30}
             height={30}
             alt="menu"
-            className="cursor-pointer"
+            className="cursor-pointer ml-3"
           />
         </SheetTrigger>
         <SheetContent side="left" className="border-none bg-white">
@@ -44,14 +45,14 @@ const MobileNav = ({ user }: MobileNavProps) => {
           </Link>
           <div className="mobilenav-sheet">
             <SheetClose asChild>
-              <nav className="flex h-full flex-col gap-6 pt-16 text-white">
+              <nav className="flex h-full flex-col gap-6 pt-16 mt-[-30px] text-white">
                   {sidebarLinks.map((item) => {
-                const isActive = pathname === item.route || pathname.startsWith(`${item.route}/`)
-
-                return (
-                  <SheetClose asChild key={item.route}>
+                    const isActive = pathname === item.route || pathname.startsWith(`${item.route}/`)
+                    
+                    return (
+                      <SheetClose asChild key={item.route}>
                     <Link href={item.route} key={item.label}
-                      className={cn('mobilenav-sheet_close w-full', { 'bg-bank-gradient': isActive })}
+                      className={cn('mobilenav-sheet_close w-full ', { 'bg-bank-gradient': isActive })}
                     >
                         <Image 
                           src={item.imgURL}
@@ -69,14 +70,12 @@ const MobileNav = ({ user }: MobileNavProps) => {
                   </SheetClose>
                 )
               })}
-
-              USER
               </nav>
             </SheetClose>
-                <Footer user={user} type='mobile'/>
-                </div>
-            </SheetContent>
-        </Sheet>
+            <Footer user={user} type="mobile" />
+          </div>
+        </SheetContent>
+      </Sheet>
     </section>
   )
 }
